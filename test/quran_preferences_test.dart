@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:quran_app/services/quran_preferences.dart';
+import 'package:quran_app/features/quran/data/quran_preferences.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -22,11 +22,11 @@ void main() {
     final savedPage = await QuranPreferences.getPagePosition(1);
     expect(savedPage, equals(5));
 
-    final lastRead = await QuranPreferences.getLastReadSurah();
+    final lastRead = await QuranPreferences.getLastReadPosition();
     expect(lastRead, isNotNull);
-    expect(lastRead!['index'], equals(1));
-    expect(lastRead['name'], equals('البقرة'));
-    expect(lastRead['page'], equals(5));
+    expect(lastRead!.surahIndex, equals(1));
+    expect(lastRead.surahName, equals('البقرة'));
+    expect(lastRead.pageIndex, equals(5));
   });
 
   test('Save and retrieve scroll position for surah (backward compatibility)',
