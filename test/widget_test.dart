@@ -1,30 +1,34 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:quran_app/features/home/presentation/home_screen.dart';
 import 'package:quran_app/main.dart';
+import 'package:quran_app/features/quran/presentation/surah_details_screen.dart';
+import 'package:quran_app/features/quran/models/surah_details_args.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  setUp(() {
+    SharedPreferences.setMockInitialValues({});
+  });
+
+  testWidgets('App opens HomeScreen when no lastRead is set', (tester) async {
     await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.byType(HomeScreen), findsOneWidget);
+    expect(find.byType(SurahDetailsScreen), findsNothing);
+  });
+
+  testWidgets('The Quran route opens from the app', (tester) async {
+    await tester.pumpWidget(const MyApp());
+    await tester.pump();
+
+    final homeContext = tester.element(find.byType(HomeScreen));
+    Navigator.of(homeContext).pushNamed(
+      SurahDetailsScreen.routeName,
+      arguments: const SurahDetailsArgs(surahName: 'البقرة', index: 1),
+    );
+    await tester.pump();
+
+    expect(find.byType(SurahDetailsScreen), findsOneWidget);
   });
 }

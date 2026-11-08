@@ -24,6 +24,14 @@
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>نحتاج الإذن لحفظ صورة صفحة القرآن في صور الجهاز.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>نحتاج الإذن لحفظ صورة صفحة القرآن في صور الجهاز.</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>نستخدم موقعك أثناء استخدام التطبيق لتحديد مواقيت الصلاة واتجاه القبلة.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>نستخدم موقعك أثناء استخدام التطبيق لتحديد مواقيت الصلاة واتجاه القبلة.</string>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>

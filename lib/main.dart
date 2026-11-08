@@ -1,30 +1,25 @@
-import 'package:flutter/material.dart';
-import 'package:quran_app/HadithdetailsScreen.dart';
-import 'package:quran_app/constans/theme.dart';
-import 'package:quran_app/homeScreen.dart';
-import 'package:quran_app/surahdetailsScreen.dart';
+import 'package:flutter/widgets.dart';
+import 'package:quran_app/app/app.dart';
+import 'package:quran_app/features/hadith/data/hadith_cache.dart';
+import 'package:quran_app/features/quran/data/quran_cache.dart';
+import 'package:quran_app/core/theme/app_theme_controller.dart';
 
-void main() {
+export 'package:quran_app/app/app.dart' show MyApp;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // تسخين الكاش في الخلفية فور بدء التطبيق
+  _warmUpCache();
+  await AppThemeController.instance.load();
+
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: Homescreen.routeName,
-      routes:  {
-        Homescreen.routeName: (context) => const Homescreen(),
-        SurahDetailsScreen.routeName: (context) => SurahDetailsScreen(),
-        HadithDetailsScreen.routeName: (context) => HadithDetailsScreen(),
-      },
-      theme: AppThemeData.lightTheme,
-    );
-  }
+/// يبدأ تحميل البيانات في الخلفية بدون انتظار
+void _warmUpCache() {
+  final cache = QuranCache.instance;
+  HadithCache.instance.getHadiths().ignore();
+  cache.getSurah(0).ignore(); // الفاتحة
+  cache.getSurah(1).ignore(); // البقرة
 }
-
