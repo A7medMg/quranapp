@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quran_app/constans/appcolor.dart';
-
-import 'screens/itemssurahandhadith.dart';
+import 'package:quran_app/constans/surah_info.dart';
+import 'package:quran_app/surah_details_screen.dart';
 
 class Qaurantab extends StatelessWidget {
-  Qaurantab({super.key});
+  const Qaurantab({super.key});
 
-  List<String> surahNames = [
+  static const List<String> surahNames = [
     "الفاتحة",
     "البقرة",
     "آل عمران",
@@ -103,7 +102,7 @@ class Qaurantab extends StatelessWidget {
     "الشرح",
     "التين",
     "العلق",
-    "القadr",
+    "القدر",
     "البينة",
     "الزلزلة",
     "العاديات",
@@ -125,29 +124,95 @@ class Qaurantab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(child: Image.asset("assets/images/logo.png")),
-        Divider(color: Appcolor.brimarycolor, thickness: 3),
-
-        Text("Sura name", style: Theme.of(context).textTheme.bodyMedium),
-        Divider(color: Appcolor.brimarycolor, thickness: 3),
-        Expanded(
-          flex: 2,
-          child: ListView.separated(
-            itemCount: surahNames.length,
-            itemBuilder: (context, index) {
-              return Itemssurahandhadith(
-                surahName: surahNames[index],
-                index: index,
-              );
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return Divider(color: Appcolor.brimarycolor, thickness: 3);
-            },
+    return SafeArea(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 18, 18, 10),
+            child: Row(
+              children: [
+                const Expanded(
+                  child: Text(
+                    'سور القرآن',
+                    style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
+                  ),
+                ),
+                Text(
+                  '${surahNames.length} سورة',
+                  style: const TextStyle(
+                    color: Color(0xFF73817E),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+              itemCount: surahNames.length,
+              itemBuilder: (context, index) {
+                final surah = QuranMetadata.getByZeroIndex(index);
+                return Material(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(15),
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        SurahDetailsScreen.routeName,
+                        arguments: SurahdetailsArgs(
+                          surahName: surahNames[index],
+                          index: index,
+                          startAtBeginning: true,
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 3,
+                      ),
+                      leading: CircleAvatar(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.primaryContainer,
+                        child: Text(
+                          '${index + 1}',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                      title: Text(
+                        surahNames[index],
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      subtitle: Text(
+                        '${surah.type}  •  ${surah.totalVerses} آية',
+                        style: const TextStyle(
+                          color: Color(0xFF73817E),
+                          fontSize: 12,
+                        ),
+                      ),
+                      trailing: const Icon(
+                        Icons.chevron_left_rounded,
+                        color: Color(0xFF789089),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) =>
+                  const SizedBox(height: 8),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

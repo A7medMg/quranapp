@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ItemHadithDetails extends StatelessWidget {
-  String content;
+  final String content;
 
-  ItemHadithDetails({required this.content, super.key});
+  const ItemHadithDetails({required this.content, super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:quran_app/surahdetailsScreen.dart';
+import 'package:quran_app/surah_details_screen.dart';
 
 class Itemssurahandhadith extends StatelessWidget {
-  String surahName;
-  int index;
+  final String surahName;
+  final int index;
 
-  Itemssurahandhadith({required this.surahName, required this.index});
+  const Itemssurahandhadith({
+    required this.surahName,
+    required this.index,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +17,11 @@ class Itemssurahandhadith extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed(
           SurahDetailsScreen.routeName,
-          arguments: SurahdetailsArgs(surahName: surahName, index: index),
+          arguments: SurahdetailsArgs(
+            surahName: surahName,
+            index: index,
+            startAtBeginning: true,
+          ),
         );
       },
       child: Text(

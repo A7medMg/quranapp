@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:quran_app/constans/appcolor.dart';
 
-class Sebhatab extends StatefulWidget {
+class SebhaTab extends StatefulWidget {
+  const SebhaTab({super.key});
+
   @override
-  State<Sebhatab> createState() => _SebhatabState();
+  State<SebhaTab> createState() => _SebhaTabState();
 }
 
-class _SebhatabState extends State<Sebhatab> {
+class _SebhaTabState extends State<SebhaTab> {
   int counter = 0;
   double anglr = 0.0;
 
@@ -70,12 +71,12 @@ class _SebhatabState extends State<Sebhatab> {
               ),
             ],
           ),
-          Text("عدد التسبيحات", style: Theme.of(context).textTheme.bodySmall),
+          Text("عدد التسبيحات", style: Theme.of(context).textTheme.bodyMedium),
           SizedBox(height: 10),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             decoration: BoxDecoration(
-              color: Appcolor.brimarycolor,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -87,7 +88,7 @@ class _SebhatabState extends State<Sebhatab> {
             margin: EdgeInsets.only(top: 20),
             padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
             decoration: BoxDecoration(
-              color: Appcolor.brimarycolor,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
